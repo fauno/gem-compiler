@@ -68,6 +68,11 @@ class Gem::Compiler
       gemspec.files.reject! { |f| !File.exist?("#{target_dir}/#{f}") }
     end
 
+    if @options[:sign_private_key_file]
+      gemspec.cert_chain = [@options[:sign_cert_file]]
+      gemspec.signing_key = @options[:sign_private_key_file]
+    end
+
     # add discovered artifacts
     artifacts.each do |path|
       # path needs to be relative to target_dir

@@ -54,6 +54,14 @@ class Gem::Commands::CompileCommand < Gem::Command
       end
     end
 
+    add_option "-s", "--sign [PRIVATE_KEY]", "Sign gems" do |private_key_file, options|
+      options[:sign_private_key_file] = File.expand_path(private_key_file)
+    end
+
+    add_option "-c", "--cert [CERT]", "Certificate" do |cert_file, options|
+      options[:sign_cert_file] = File.expand_path(cert_file)
+    end
+
     add_option "--build-number NUMBER",
       "Append build number to compiled Gem version" do |value, options|
 
