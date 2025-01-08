@@ -54,6 +54,10 @@ class Gem::Commands::CompileCommand < Gem::Command
       end
     end
 
+    add_option "-u", "--unsafe", "Remove push restrictions" do |_, options|
+      options[:remove_gemspec_restrictions] = true
+    end
+
     add_option "--build-number NUMBER",
       "Append build number to compiled Gem version" do |value, options|
 

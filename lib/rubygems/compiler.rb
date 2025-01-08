@@ -68,6 +68,11 @@ class Gem::Compiler
       gemspec.files.reject! { |f| !File.exist?("#{target_dir}/#{f}") }
     end
 
+    if @options[:remove_gemspec_restrictions]
+      gemspec.metadata.delete 'allowed_push_host'
+      gemspec.metadata.delete 'rubygems_mfa_required'
+    end
+
     # add discovered artifacts
     artifacts.each do |path|
       # path needs to be relative to target_dir
