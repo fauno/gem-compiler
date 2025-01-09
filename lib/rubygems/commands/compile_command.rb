@@ -103,4 +103,12 @@ class Gem::Commands::CompileCommand < Gem::Command
     compiler = Gem::Compiler.new(gemfile, options)
     compiler.compile
   end
+
+  def handle_options(args)
+    super.tap do |f|
+      next if options.key?(:sign_cert_file) && options.key?(:sign_private_key_file)
+
+      raise Gem::OptionParser::MissingArgument, "Both --cert and --sign options need to be provided"
+    end
+  end
 end
