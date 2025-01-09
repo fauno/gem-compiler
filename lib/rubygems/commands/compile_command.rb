@@ -36,7 +36,7 @@ class Gem::Commands::CompileCommand < Gem::Command
       mode = ABIs[value]
       unless mode
         valid = ABIs.keys.sort
-        raise OptionParser::InvalidArgument, "#{value} (#{valid.join ', '} are valid)"
+        raise Gem::OptionParser::InvalidArgument, "#{value} (#{valid.join ', '} are valid)"
       end
 
       options[:abi_lock] = mode
@@ -68,7 +68,7 @@ class Gem::Commands::CompileCommand < Gem::Command
       begin
         options[:build_number] = Integer(value).abs
       rescue ArgumentError
-        raise OptionParser::InvalidArgument, "must be a number"
+        raise Gem::OptionParser::InvalidArgument, "must be a number"
       end
     end
   end
