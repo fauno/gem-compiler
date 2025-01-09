@@ -55,11 +55,19 @@ class Gem::Commands::CompileCommand < Gem::Command
     end
 
     add_option "-s", "--sign [PRIVATE_KEY]", "Sign gems" do |private_key_file, options|
-      options[:sign_private_key_file] = File.expand_path(private_key_file)
+      options[:sign_private_key_file] = File.expand_path(private_key_file).tap do |f|
+        next if File.exist? f
+
+        raise Gem::OptionParser::InvalidArgument, "#{private_key_file} must exist"
+      end
     end
 
     add_option "-c", "--cert [CERT]", "Certificate" do |cert_file, options|
-      options[:sign_cert_file] = File.expand_path(cert_file)
+      options[:sign_cert_file] = File.expand_path(cert_file).tap do |f|
+        next if File.exist? f
+
+        raise Gem::OptionParser::InvalidArgument, "#{cert_file} must exist"
+      end
     end
 
     add_option "--build-number NUMBER",
